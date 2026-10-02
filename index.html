@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pul hisobi</title>
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1d4e43"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f4f2ec;--card:#fff;--tx:#1c2825;--mu:#66746f;--in:#17794a;--out:#c0392b;--ac:#1d4e43;--ln:#e1ddd2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111917;--card:#1a2421;--tx:#e8efec;--mu:#92a29c;--in:#4cc98a;--out:#f07878;--ac:#6fc1ab;--ln:#2a3631}}
+:root[data-theme="dark"]{--bg:#111917;--card:#1a2421;--tx:#e8efec;--mu:#92a29c;--in:#4cc98a;--out:#f07878;--ac:#6fc1ab;--ln:#2a3631}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:640px;margin:0 auto;padding:12px 14px 40px}
+h1{font-size:20px;margin:6px 0 10px}h2{font-size:16px;margin:18px 0 8px}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tabs button{flex:1;padding:10px 4px;border:1px solid var(--ln);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;font-weight:600}
+.tabs button.on{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:12px;margin-bottom:10px}
+.big{font-size:30px;font-weight:700;letter-spacing:-.5px}
+.mu{color:var(--mu);font-size:13px}.in{color:var(--in)}.out{color:var(--out)}
+.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:6px 4px;text-align:right;border-bottom:1px solid var(--ln)}th:first-child,td:first-child{text-align:left}th{color:var(--mu);font-weight:500}
+label{display:block;font-size:13px;color:var(--mu);margin:8px 0 3px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:10px;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit;font-weight:600}
+.seg button.on.i{background:var(--in);color:#fff;border-color:var(--in)}.seg button.on.o{background:var(--out);color:#fff;border-color:var(--out)}
+.btn{width:100%;margin-top:12px;padding:12px;border:0;border-radius:10px;background:var(--ac);color:var(--bg);font:inherit;font-weight:700}
+.it{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--ln)}.it:last-child{border:0}
+.it b{display:block}.amt{font-weight:700;white-space:nowrap;text-align:right}
+.x{background:none;border:0;color:var(--mu);font-size:13px;padding:2px 0;text-decoration:underline}
+.empty{color:var(--mu);text-align:center;padding:18px 0}
+.hide{display:none}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+</style></head><body>
+<h1>Pul hisobi</h1>
+<div class="tabs"><button data-t="home" class="on">Asosiy</button><button data-t="hist">Tarix</button><button data-t="debt">Qarzlar</button></div>
+
+<section id="home">
+  <div class="card"><div class="mu">Hozirgi qoldiq</div><div class="big" id="bal"></div><div class="mu" id="since"></div></div>
+  <div class="g2">
+    <div class="card"><div class="mu">Bugun kirim</div><div class="big in" style="font-size:20px" id="ti"></div></div>
+    <div class="card"><div class="mu">Bugun chiqim</div><div class="big out" style="font-size:20px" id="to"></div></div>
+  </div>
+  <div class="card"><table><thead><tr><th></th><th>Kirim</th><th>Chiqim</th><th>Farq</th></tr></thead><tbody id="per"></tbody></table></div>
+
+  <h2>Yangi yozuv</h2>
+  <div class="card">
+    <div class="seg"><button id="bi" class="on i">Kirim</button><button id="bo" class="o">Chiqim</button></div>
+    <label>Summa</label><input id="a" type="number" inputmode="decimal" placeholder="0">
+    <label id="cl">Qayerdan keldi</label><input id="c" placeholder="Masalan: maosh, savdo">
+    <div class="row"><div><label>Sana</label><input id="d" type="date"></div><div><label>Soat</label><input id="tm" type="time"></div></div>
+    <label>Izoh</label><textarea id="n" rows="2" placeholder="Ixtiyoriy"></textarea>
+    <button class="btn" id="add">Saqlash</button>
+  </div>
+
+  <h2>Hisob boshlanishi</h2>
+  <div class="card"><div class="row"><div><label>Boshlanish sanasi</label><input id="st" type="date"></div><div><label>Boshlang'ich summa</label><input id="op" type="number" inputmode="decimal"></div></div>
+  <div class="mu" style="margin-top:6px">Hisob shu sanadan boshlab davomiy yuritiladi.</div></div>
+<h2>Zaxira nusxa</h2>
+  <div class="card"><div class="row"><button class="btn" style="margin:0" id="exp">Yuklab olish</button><button class="btn" style="margin:0" id="imp">Qaytarish</button></div><input id="impf" type="file" accept=".json" class="hide"><div class="mu" style="margin-top:6px">Ma'lumotlar faqat shu telefonda saqlanadi. Vaqti-vaqti bilan zaxira nusxa oling.</div></div>
+</section>
+
+<section id="hist" class="hide">
+  <div class="row"><select id="fp"><option value="all">Hammasi</option><option value="day">Bugun</option><option value="week">Shu hafta</option><option value="month">Shu oy</option></select>
+  <select id="ft"><option value="all">Kirim va chiqim</option><option value="in">Faqat kirim</option><option value="out">Faqat chiqim</option></select></div>
+  <div class="card" style="margin-top:10px" id="hl"></div>
+  <div class="mu" id="hs"></div>
+</section>
+
+<section id="debt" class="hide">
+  <div class="g2">
+    <div class="card"><div class="mu">Men qarzdorman</div><div class="big out" style="font-size:20px" id="dow"></div></div>
+    <div class="card"><div class="mu">Menga qarz</div><div class="big in" style="font-size:20px" id="dle"></div></div>
+  </div>
+  <div class="card">
+    <div class="seg"><button id="k1" class="on o">Qarz oldim</button><button id="k2" class="i">Qarz berdim</button></div>
+    <label id="pl">Kimdan</label><input id="p" placeholder="Ism">
+    <label>Summa</label><input id="da" type="number" inputmode="decimal" placeholder="0">
+    <div class="row"><div><label>Sana</label><input id="dd" type="date"></div><div><label>Soat</label><input id="dt" type="time"></div></div>
+    <label>Izoh</label><textarea id="dn" rows="2" placeholder="Ixtiyoriy (qaytarish muddati va h.k.)"></textarea>
+    <button class="btn" id="dadd">Qarzni saqlash</button>
+  </div>
+  <div class="card" id="dl"></div>
+</section>
+
+<script>
+var K="pulhisobi_v1",S={start:"",open:0,tx:[],debts:[]},kind="in",dk="owe";
+try{var r=localStorage.getItem(K);if(r)S=JSON.parse(r)}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function p2(n){return String(n).padStart(2,"0")}
+function iso(d){return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate())}
+function nowT(){var d=new Date();return p2(d.getHours())+":"+p2(d.getMinutes())}
+function money(n){return Math.round(n).toLocaleString("ru-RU")+" so'm"}
+function esc(s){return String(s||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function weekStart(){var d=new Date();var w=(d.getDay()+6)%7;d.setDate(d.getDate()-w);return iso(d)}
+if(!S.start){S.start=iso(new Date());save()}
+function inRange(t,per){var td=iso(new Date());
+ if(per==="day")return t.d===td;if(per==="week")return t.d>=weekStart();
+ if(per==="month")return t.d.slice(0,7)===td.slice(0,7);return true}
+function sums(per){var i=0,o=0;S.tx.forEach(function(t){if(t.d>=S.start&&inRange(t,per)){t.t==="in"?i+=t.a:o+=t.a}});return[i,o]}
+function sorted(a){return a.slice().sort(function(x,y){return(y.d+(y.tm||""))>(x.d+(x.tm||""))?1:-1})}
+function render(){
+ var all=sums("all");$("bal").textContent=money(S.open+all[0]-all[1]);
+ $("bal").className="big "+(S.open+all[0]-all[1]<0?"out":"");
+ $("since").textContent=S.start.split("-").reverse().join(".")+" dan beri hisoblanmoqda";
+ var td=sums("day");$("ti").textContent=money(td[0]);$("to").textContent=money(td[1]);
+ var h="";[["Bugun","day"],["Shu hafta","week"],["Shu oy","month"],["Jami","all"]].forEach(function(x){var s=sums(x[1]),f=s[0]-s[1];
+  h+="<tr><td>"+x[0]+"</td><td class='in'>"+Math.round(s[0]).toLocaleString("ru-RU")+"</td><td class='out'>"+Math.round(s[1]).toLocaleString("ru-RU")+"</td><td class='"+(f<0?"out":"in")+"'>"+Math.round(f).toLocaleString("ru-RU")+"</td></tr>"});
+ $("per").innerHTML=h;$("st").value=S.start;$("op").value=S.open||"";
+ // history
+ var per=$("fp").value,ty=$("ft").value;
+ var L=sorted(S.tx.filter(function(t){return inRange(t,per)&&(ty==="all"||t.t===ty)}));
+ var si=0,so=0;
+ $("hl").innerHTML=L.length?L.map(function(t){t.t==="in"?si+=t.a:so+=t.a;
+  return "<div class='it'><div><b>"+esc(t.c||(t.t==="in"?"Kirim":"Chiqim"))+"</b><span class='mu'>"+t.d.split("-").reverse().join(".")+" "+esc(t.tm)+"</span>"+(t.n?"<div class='mu'>"+esc(t.n)+"</div>":"")+"</div><div><div class='amt "+(t.t==="in"?"in":"out")+"'>"+(t.t==="in"?"+":"−")+money(t.a)+"</div><button class='x' data-del='"+t.id+"'>o'chirish</button></div></div>"}).join(""):"<div class='empty'>Yozuvlar yo'q</div>";
+ $("hs").textContent="Kirim: "+money(si)+"  •  Chiqim: "+money(so);
+ // debts
+ var ow=0,le=0;S.debts.forEach(function(d){if(!d.paid){d.k==="owe"?ow+=d.a:le+=d.a}});
+ $("dow").textContent=money(ow);$("dle").textContent=money(le);
+ $("dl").innerHTML=S.debts.length?sorted(S.debts).map(function(d){
+  return "<div class='it' style='"+(d.paid?"opacity:.55":"")+"'><div><b>"+esc(d.p)+"</b><span class='mu'>"+(d.k==="owe"?"Qarz oldim":"Qarz berdim")+" • "+d.d.split("-").reverse().join(".")+" "+esc(d.tm)+"</span>"+(d.n?"<div class='mu'>"+esc(d.n)+"</div>":"")+"</div><div><div class='amt "+(d.k==="owe"?"out":"in")+"'>"+money(d.a)+"</div>"+
+  "<button class='x' data-paid='"+d.id+"'>"+(d.paid?"qaytarish":"to'landi")+"</button> <button class='x' data-ddel='"+d.id+"'>o'chirish</button></div></div>"}).join(""):"<div class='empty'>Qarzlar yo'q</div>";
+}
+function setKind(k){kind=k;$("bi").classList.toggle("on",k==="in");$("bo").classList.toggle("on",k==="out");$("cl").textContent=k==="in"?"Qayerdan keldi":"Nimaga sarflandi"}
+function setDk(k){dk=k;$("k1").classList.toggle("on",k==="owe");$("k2").classList.toggle("on",k==="lent");$("pl").textContent=k==="owe"?"Kimdan":"Kimga"}
+$("bi").onclick=function(){setKind("in")};$("bo").onclick=function(){setKind("out")};
+$("k1").onclick=function(){setDk("owe")};$("k2").onclick=function(){setDk("lent")};
+$("add").onclick=function(){var a=parseFloat($("a").value);if(!(a>0)){alert("Summani kiriting");return}
+ S.tx.push({id:Date.now(),t:kind,a:a,c:$("c").value.trim(),d:$("d").value||iso(new Date()),tm:$("tm").value||nowT(),n:$("n").value.trim()});
+ save();$("a").value=$("c").value=$("n").value="";$("d").value=iso(new Date());$("tm").value=nowT();render()};
+$("dadd").onclick=function(){var a=parseFloat($("da").value);if(!(a>0)||!$("p").value.trim()){alert("Ism va summani kiriting");return}
+ S.debts.push({id:Date.now(),k:dk,p:$("p").value.trim(),a:a,d:$("dd").value||iso(new Date()),tm:$("dt").value||nowT(),n:$("dn").value.trim(),paid:false});
+ save();$("p").value=$("da").value=$("dn").value="";$("dd").value=iso(new Date());$("dt").value=nowT();render()};
+$("st").onchange=function(){if($("st").value){S.start=$("st").value;save();render()}};
+$("op").onchange=function(){S.open=parseFloat($("op").value)||0;save();render()};
+$("fp").onchange=$("ft").onchange=render;
+document.body.addEventListener("click",function(e){var t=e.target;
+ if(t.dataset.del&&confirm("O'chirilsinmi?")){S.tx=S.tx.filter(function(x){return x.id!=t.dataset.del});save();render()}
+ if(t.dataset.ddel&&confirm("O'chirilsinmi?")){S.debts=S.debts.filter(function(x){return x.id!=t.dataset.ddel});save();render()}
+ if(t.dataset.paid){S.debts.forEach(function(x){if(x.id==t.dataset.paid)x.paid=!x.paid});save();render()}
+ if(t.dataset.t){["home","hist","debt"].forEach(function(s){$(s).classList.toggle("hide",s!==t.dataset.t)});
+  document.querySelectorAll(".tabs button").forEach(function(b){b.classList.toggle("on",b===t)})}});
+$("exp").onclick=function(){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="pul-hisobi-"+iso(new Date())+".json";a.click()};
+$("imp").onclick=function(){$("impf").click()};
+$("impf").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);if(!o.tx||!o.debts)throw 0;S=o;save();render();alert("Qaytarildi")}catch(e){alert("Fayl noto'g'ri")}};r.readAsText(f)};
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
+$("d").value=$("dd").value=iso(new Date());$("tm").value=$("dt").value=nowT();
+render();
+</script></body></html>
